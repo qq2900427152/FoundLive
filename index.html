@@ -3,86 +3,494 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IP 查詢工具</title>
+  <title>IP 查詢工具 - home.isme.world</title>
+
   <style>
-    body {
-      font-family: Arial, "Microsoft JhengHei", sans-serif;
-      background: #f5f5f5;
-      text-align: center;
-      padding-top: 80px;
+    * {
+      box-sizing: border-box;
     }
 
-    .box {
-      background: white;
-      width: 90%;
-      max-width: 500px;
-      margin: auto;
+    body {
+      font-family: Arial, "Microsoft JhengHei", "PingFang TC", sans-serif;
+      background: #f4f6f8;
+      margin: 0;
       padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      color: #222;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      background: #ffffff;
+      border-radius: 14px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+    }
+
+    .header {
+      padding: 35px 30px 25px;
+      text-align: center;
+      background: linear-gradient(135deg, #f8fbff, #eef4ff);
+      border-bottom: 1px solid #dde5f0;
     }
 
     h1 {
-      font-size: 32px;
-      margin-bottom: 20px;
+      margin: 0;
+      font-size: 34px;
+      letter-spacing: 1px;
     }
 
-    #ip {
-      font-size: 36px;
+    .subtitle {
+      margin-top: 10px;
+      color: #666;
+      font-size: 15px;
+    }
+
+    .main-ip {
+      margin-top: 25px;
+      font-size: 42px;
       font-weight: bold;
-      color: #0077ff;
-      margin: 20px 0;
+      color: #0066ff;
       word-break: break-all;
+    }
+
+    .status {
+      margin-top: 12px;
+      font-size: 15px;
+      color: #666;
+    }
+
+    .content {
+      padding: 25px 30px 35px;
+    }
+
+    .section-title {
+      font-size: 22px;
+      font-weight: bold;
+      margin: 25px 0 12px;
+      padding-left: 10px;
+      border-left: 5px solid #0066ff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 25px;
+      background: #fff;
+    }
+
+    th {
+      width: 260px;
+      text-align: left;
+      background: #f0f3f7;
+      padding: 13px 14px;
+      border: 1px solid #d9dee5;
+      font-weight: bold;
+      vertical-align: top;
+    }
+
+    td {
+      padding: 13px 14px;
+      border: 1px solid #d9dee5;
+      word-break: break-all;
+      vertical-align: top;
+    }
+
+    .button-row {
+      text-align: center;
+      margin-top: 20px;
     }
 
     button {
       font-size: 18px;
-      padding: 10px 20px;
-      cursor: pointer;
+      padding: 12px 26px;
       border: none;
       border-radius: 8px;
-      background: #0077ff;
+      background: #0066ff;
       color: white;
+      cursor: pointer;
     }
 
-    .small {
-      margin-top: 20px;
-      color: #666;
-      font-size: 14px;
+    button:hover {
+      background: #004fcc;
+    }
+
+    .ok {
+      color: #008a3d;
+      font-weight: bold;
+    }
+
+    .fail {
+      color: #d60000;
+      font-weight: bold;
+    }
+
+    .warning {
+      color: #b36b00;
+      font-weight: bold;
+    }
+
+    .footer {
+      text-align: center;
+      color: #777;
+      font-size: 13px;
+      margin-top: 25px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
+      body {
+        padding: 12px;
+      }
+
+      .header {
+        padding: 28px 18px 22px;
+      }
+
+      .content {
+        padding: 18px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .main-ip {
+        font-size: 30px;
+      }
+
+      table, tbody, tr, th, td {
+        display: block;
+        width: 100%;
+      }
+
+      th {
+        border-bottom: none;
+      }
+
+      td {
+        border-top: none;
+        margin-bottom: 8px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
+    <div class="header">
+      <h1>HOME 查詢</h1>
+      <div class="subtitle">查看你目前連線使用的 IP、地區、網路商與瀏覽器資訊</div>
+      <div id="mainIp" class="main-ip">讀取中...</div>
+      <div id="status" class="status">正在取得你的連線資訊...</div>
+    </div>
 
-  <div class="box">
-    <h1>你的目前 IP</h1>
+    <div class="content">
+      <div class="section-title">IP 資訊</div>
 
-    <div id="ip">讀取中...</div>
+      <table>
+        <tbody>
+          <tr>
+            <th>IP Address</th>
+            <td id="ip">讀取中...</td>
+          </tr>
+          <tr>
+            <th>IP Version</th>
+            <td id="ipVersion">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Country</th>
+            <td id="country">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Region</th>
+            <td id="region">讀取中...</td>
+          </tr>
+          <tr>
+            <th>City</th>
+            <td id="city">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Postal Code</th>
+            <td id="postal">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Latitude / Longitude</th>
+            <td id="latlon">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Timezone</th>
+            <td id="timezone">讀取中...</td>
+          </tr>
+          <tr>
+            <th>UTC Offset</th>
+            <td id="utcOffset">讀取中...</td>
+          </tr>
+        </tbody>
+      </table>
 
-    <button onclick="getIP()">重新查詢</button>
+      <div class="section-title">網路資訊</div>
 
-    <div class="small">
-      Powered by FoundLive Pages
+      <table>
+        <tbody>
+          <tr>
+            <th>ISP</th>
+            <td id="isp">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Organization</th>
+            <td id="org">讀取中...</td>
+          </tr>
+          <tr>
+            <th>ASN</th>
+            <td id="asn">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Currency</th>
+            <td id="currency">讀取中...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="section-title">瀏覽器資訊</div>
+
+      <table>
+        <tbody>
+          <tr>
+            <th>User Agent</th>
+            <td id="userAgent">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Browser Language</th>
+            <td id="language">讀取中...</td>
+          </tr>
+          <tr>
+            <th>All Languages</th>
+            <td id="languages">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Platform</th>
+            <td id="platform">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Screen Size</th>
+            <td id="screen">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Window Size</th>
+            <td id="windowSize">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Device Pixel Ratio</th>
+            <td id="pixelRatio">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Cookies Enabled</th>
+            <td id="cookies">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Online Status</th>
+            <td id="online">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Referrer</th>
+            <td id="referrer">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Current URL</th>
+            <td id="currentUrl">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Protocol</th>
+            <td id="protocol">讀取中...</td>
+          </tr>
+          <tr>
+            <th>HTTPS</th>
+            <td id="https">讀取中...</td>
+          </tr>
+          <tr>
+            <th>Local Time</th>
+            <td id="localTime">讀取中...</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="button-row">
+        <button onclick="loadInfo()">重新查詢</button>
+      </div>
+
+      <div class="footer">
+        home.isme.world IP Checker<br>
+        IP 地區資料由免費 API 提供，實際位置可能會因 VPN、代理、電信商出口而有誤差。
+      </div>
     </div>
   </div>
 
   <script>
-    async function getIP() {
-      const ipBox = document.getElementById("ip");
-      ipBox.textContent = "讀取中...";
+    function setText(id, value) {
+      const element = document.getElementById(id);
+      if (!element) return;
 
-      try {
-        const response = await fetch("https://api.ipify.org?format=json");
-        const data = await response.json();
-        ipBox.textContent = data.ip;
-      } catch (error) {
-        ipBox.textContent = "查詢失敗";
-        console.error(error);
+      if (value === null || value === undefined || value === "") {
+        element.textContent = "無資料";
+      } else {
+        element.textContent = value;
       }
     }
 
-    getIP();
-  </script>
+    function detectIpVersion(ip) {
+      if (!ip) return "未知";
+      return ip.includes(":") ? "IPv6" : "IPv4";
+    }
 
+    function yesNo(value) {
+      return value ? "是" : "否";
+    }
+
+    function loadBrowserInfo() {
+      setText("userAgent", navigator.userAgent);
+      setText("language", navigator.language || navigator.userLanguage);
+      setText("languages", navigator.languages ? navigator.languages.join(", ") : "無資料");
+      setText("platform", navigator.platform);
+      setText("screen", screen.width + " x " + screen.height);
+      setText("windowSize", window.innerWidth + " x " + window.innerHeight);
+      setText("pixelRatio", window.devicePixelRatio);
+      setText("cookies", yesNo(navigator.cookieEnabled));
+      setText("online", navigator.onLine ? "Online" : "Offline");
+      setText("referrer", document.referrer || "直接開啟 / 無來源");
+      setText("currentUrl", location.href);
+      setText("protocol", location.protocol);
+      setText("https", location.protocol === "https:" ? "是 HTTPS" : "不是 HTTPS");
+      setText("localTime", new Date().toLocaleString());
+    }
+
+    function fillIpData(data, sourceName) {
+      setText("mainIp", data.ip);
+      setText("ip", data.ip);
+      setText("ipVersion", detectIpVersion(data.ip));
+      setText("country", data.country);
+      setText("region", data.region);
+      setText("city", data.city);
+      setText("postal", data.postal);
+      setText("latlon", data.latlon);
+      setText("timezone", data.timezone);
+      setText("utcOffset", data.utcOffset);
+      setText("isp", data.isp);
+      setText("org", data.org);
+      setText("asn", data.asn);
+      setText("currency", data.currency);
+
+      document.getElementById("status").innerHTML =
+        '<span class="ok">查詢完成</span>，資料來源：IsMe.World';
+    }
+
+    async function getFromIpapi() {
+      const response = await fetch("https://ipapi.co/json/", {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error("ipapi.co HTTP error");
+      }
+
+      const data = await response.json();
+
+      if (data.error) {
+        throw new Error(data.reason || "ipapi.co returned error");
+      }
+
+      return {
+        ip: data.ip,
+        country: data.country_name ? data.country_name + " (" + data.country_code + ")" : "無資料",
+        region: data.region,
+        city: data.city,
+        postal: data.postal,
+        latlon: data.latitude && data.longitude ? data.latitude + ", " + data.longitude : "無資料",
+        timezone: data.timezone,
+        utcOffset: data.utc_offset,
+        isp: data.org,
+        org: data.org,
+        asn: data.asn,
+        currency: data.currency
+      };
+    }
+
+    async function getFromIpify() {
+      const response = await fetch("https://api.ipify.org?format=json", {
+        cache: "no-store"
+      });
+
+      if (!response.ok) {
+        throw new Error("api.ipify.org HTTP error");
+      }
+
+      const data = await response.json();
+
+      return {
+        ip: data.ip,
+        country: "無資料",
+        region: "無資料",
+        city: "無資料",
+        postal: "無資料",
+        latlon: "無資料",
+        timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+        utcOffset: "無資料",
+        isp: "無資料",
+        org: "無資料",
+        asn: "無資料",
+        currency: "無資料"
+      };
+    }
+
+    async function loadInfo() {
+      const mainIp = document.getElementById("mainIp");
+      const status = document.getElementById("status");
+
+      mainIp.textContent = "讀取中...";
+      status.textContent = "正在查詢 IP 資訊...";
+
+      loadBrowserInfo();
+
+      try {
+        const data = await getFromIpapi();
+        fillIpData(data, "ipapi.co");
+      } catch (error1) {
+        console.warn("ipapi.co 查詢失敗，改用 api.ipify.org", error1);
+
+        try {
+          const data = await getFromIpify();
+          fillIpData(data, "api.ipify.org");
+          status.innerHTML =
+            '<span class="warning">部分查詢成功</span>，只取得 IP，地區資料無法取得。資料來源：IsMe.World';
+        } catch (error2) {
+          console.error("所有 API 都查詢失敗", error2);
+
+          setText("mainIp", "查詢失敗");
+          setText("ip", "查詢失敗");
+          setText("ipVersion", "查詢失敗");
+          setText("country", "查詢失敗");
+          setText("region", "查詢失敗");
+          setText("city", "查詢失敗");
+          setText("postal", "查詢失敗");
+          setText("latlon", "查詢失敗");
+          setText("timezone", "查詢失敗");
+          setText("utcOffset", "查詢失敗");
+          setText("isp", "查詢失敗");
+          setText("org", "查詢失敗");
+          setText("asn", "查詢失敗");
+          setText("currency", "查詢失敗");
+
+          status.innerHTML =
+            '<span class="fail">查詢失敗</span>，可能是外部 API 暫時無法連線，或瀏覽器阻擋請求。';
+        }
+      }
+    }
+
+    window.addEventListener("resize", function () {
+      setText("windowSize", window.innerWidth + " x " + window.innerHeight);
+    });
+
+    loadInfo();
+  </script>
 </body>
 </html>
